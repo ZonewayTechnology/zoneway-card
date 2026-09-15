@@ -3,23 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoneway Touch LCM + Dynamic Digital Card Integration</title>
+    <title>Zoneway 5.5" CTP Touch Module & Real Emerald Card</title>
     <style>
-        :root {
-            --bezel-color: #121316;
-            --screen-bg: #050807;
-            --primary-green: #10b981;
-            --gold-text: #fef3c7;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #1e2025;
+            background-color: #0b0c10;
             color: #e5e7eb;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             min-height: 100vh;
@@ -27,262 +16,228 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            overflow: hidden;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            font-size: 1.6rem;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-        }
-
-        /* Hardware LCM Shell Simulator */
-        .hardware-frame {
+        /* 主设备卡片容器（直接以实物照片作为基础外壳） */
+        .hardware-container {
             position: relative;
-            background: linear-gradient(145deg, #2a2d34, #1a1b20);
-            border: 3px solid #374151;
-            border-radius: 16px;
-            padding: 30px 20px 40px 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
-                        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 500px; /* 匹配实物图片的比例大小 */
+            aspect-ratio: 4 / 3;
+            background-image: url('screen-frame.jpg'); /* 使用你的实物照片 */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
         }
 
-        /* Screen Glass Area (Simulating 5.5" 720x1440 Ratio) */
-        .screen-bezel {
-            position: relative;
-            width: 320px;
-            height: 640px;
-            background: #000;
-            border-radius: 8px;
-            border: 2px solid #222;
+        /* 嵌入在实物黑屏区域内部的“点亮屏幕” */
+        .active-screen {
+            position: absolute;
+            /* 精确对齐实物照片中的黑色显示区域 */
+            top: 15.5%;
+            left: 36.3%;
+            width: 27.5%;
+            height: 68.8%;
+            background-color: #030712; /* 点亮屏幕的暗背景 */
             overflow: hidden;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 6px;
+            box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.3); /* 模拟屏幕背光微光 */
             cursor: pointer;
         }
 
-        .screen-content {
+        /* 顶部状态栏 */
+        .screen-header {
             width: 100%;
-            height: 100%;
-            background-color: var(--screen-bg);
-            position: relative;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: space-between;
-            padding: 40px 15px 30px 15px;
-        }
-
-        /* Glass Reflection Effect (CTP Optical Bonding Sim) */
-        .glass-glare {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(125deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, transparent 50%);
-            pointer-events: none;
-            z-index: 20;
-        }
-
-        /* Embedded Emerald Gem */
-        .emerald-gem {
-            position: relative;
-            width: 270px;
-            height: 170px;
-            border-radius: 90px / 65px;
-            background: radial-gradient(ellipse at 50% 50%, #0d5c3a 0%, #042416 70%, #01120a 100%);
-            border: 2px solid rgba(110, 231, 183, 0.5);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 25px rgba(16, 185, 129, 0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 15px;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.5rem;
+            color: #10b981;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+            padding-bottom: 4px;
+            font-family: monospace;
         }
 
-        .emerald-gem:active {
-            transform: scale(0.96);
-        }
-
-        .company-title {
-            font-size: 0.82rem;
-            font-weight: bold;
-            color: var(--gold-text);
-            margin-bottom: 8px;
-            font-family: 'Times New Roman', serif;
-        }
-
-        .card-details {
-            font-size: 0.7rem;
-            color: var(--gold-text);
-            line-height: 1.4;
-            font-family: 'Times New Roman', serif;
-        }
-
-        /* Interactive Touch Trigger Points */
-        .touch-dashboard {
+        /* 核心：翡翠宝石名片 */
+        .real-gem-card {
+            position: relative;
             width: 100%;
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 12px;
-            padding: 12px;
+            height: 48%;
+            background-image: url('gem.png'); /* 使用你的宝石原图 */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform 0.15s ease-out;
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
+        }
+
+        /* 宝石表面扫过柔光 */
+        .real-gem-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(
+                125deg,
+                transparent 40%,
+                rgba(255, 255, 255, 0.25) 50%,
+                transparent 60%
+            );
+            transform: rotate(30deg);
+            animation: gemShimmer 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes gemShimmer {
+            0% { transform: translateX(-100%) rotate(30deg); opacity: 0; }
+            10% { opacity: 1; }
+            20% { transform: translateX(100%) rotate(30deg); opacity: 0; }
+            100% { transform: translateX(100%) rotate(30deg); opacity: 0; }
+        }
+
+        /* 触控交互菜单 */
+        .touch-menu {
+            width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            z-index: 10;
+            gap: 6px;
+            z-index: 5;
         }
 
-        .dash-btn {
-            background: rgba(6, 78, 59, 0.6);
-            border: 1px solid rgba(52, 211, 153, 0.4);
-            color: #a7f3d0;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
+        .action-btn {
+            background: rgba(6, 78, 59, 0.7);
+            border: 1px solid rgba(52, 211, 153, 0.5);
+            color: #d1fae5;
+            padding: 6px 4px;
+            border-radius: 4px;
+            font-size: 0.55rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
             transition: all 0.2s;
+            text-decoration: none;
         }
 
-        .dash-btn:hover {
-            background: rgba(16, 185, 129, 0.4);
+        .action-btn:hover {
+            background: rgba(16, 185, 129, 0.5);
             color: #ffffff;
+            border-color: #6ee7b7;
         }
 
-        /* Particle Overlay */
-        .touch-ripple {
+        /* 水波纹效果 */
+        .ripple {
             position: absolute;
             border-radius: 50%;
             background: rgba(110, 231, 183, 0.6);
             transform: scale(0);
-            animation: ripple 0.6s linear;
+            animation: ripple-anim 0.5s linear;
             pointer-events: none;
-            z-index: 30;
         }
 
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+        @keyframes ripple-anim {
+            to { transform: scale(3); opacity: 0; }
         }
 
-        /* Spec Labels on Hardware Shell */
-        .hardware-label {
-            position: absolute;
-            bottom: 12px;
-            font-size: 0.75rem;
+        /* 底部标注 */
+        .screen-footer {
+            font-size: 0.45rem;
             color: #6b7280;
-            letter-spacing: 1px;
+            text-align: center;
             font-family: monospace;
         }
+
+        .page-title {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .page-title h1 { font-size: 1.2rem; color: #10b981; font-weight: 600; }
+        .page-title p { font-size: 0.8rem; color: #9ca3af; margin-top: 4px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>显示屏模组 (LCM) × 动态电子名片 演示</h1>
-        <p>在 5.5 英寸 ZZW550HIS 触摸屏上直接交互与展示</p>
+    <div class="page-title">
+        <h1>Zoneway 5.5" CTP 硬件模组 $\times$ 翡翠名片</h1>
+        <p>基于硬件实物图的真彩显示与 3D 触控交互演示</p>
     </div>
 
-    <!-- Hardware Simulator Frame -->
-    <div class="hardware-frame">
-        <div class="screen-bezel" id="screen">
-            <div class="glass-glare"></div>
+    <!-- 硬件实物外壳（直接引用实物图片） -->
+    <div class="hardware-container">
+        <!-- 点亮的屏幕区域 -->
+        <div class="active-screen" id="activeScreen">
             
-            <div class="screen-content">
-                <!-- Status Bar -->
-                <div style="width:100%; display:flex; justify-content:space-between; font-size:0.65rem; color:#10b981;">
-                    <span>ZONEWAY DISPLAY</span>
-                    <span>MIPI | 720×1440</span>
-                </div>
-
-                <!-- Dynamic Gem Card -->
-                <div class="emerald-gem" id="gemCard">
-                    <div class="company-title">Shenzhen Zoneway Technology Co., Ltd</div>
-                    <div class="card-details">
-                        <div><strong>Susan Xiao</strong> (Sales Manager)</div>
-                        <div style="margin-top: 4px;">sales@zoneway.com</div>
-                        <div>www.zoneway.com</div>
-                    </div>
-                </div>
-
-                <!-- Touch Action Menu (Simulating Product Showcases) -->
-                <div class="touch-dashboard">
-                    <div style="font-size: 0.7rem; color: #34d399; font-weight: bold; text-align: center; margin-bottom: 2px;">
-                        👇 点击屏幕按钮体验触控响应
-                    </div>
-                    <button class="dash-btn" onclick="alert('正在加载 Zoneway 5.5 英寸模组规格书 (PDF)...')">
-                        <span>📄 查看模组 Datasheet</span>
-                        <span>➔</span>
-                    </button>
-                    <button class="dash-btn" onclick="alert('拨打联系电话: +86 18124585116')">
-                        <span>📞 一键呼叫销售经理</span>
-                        <span>➔</span>
-                    </button>
-                    <button class="dash-btn" onclick="alert('发送询价至: sales@zoneway.com')">
-                        <span>✉️ 发送产品询价 (RFQ)</span>
-                        <span>➔</span>
-                    </button>
-                </div>
-
-                <!-- Footer info -->
-                <div style="font-size: 0.6rem; color: #4b5563;">Powered by Zoneway CTP Touch Solution</div>
+            <!-- 状态栏 -->
+            <div class="screen-header">
+                <span>ZONEWAY</span>
+                <span>MIPI 720×1440</span>
             </div>
-        </div>
 
-        <div class="hardware-label">MODEL: ZZW550HIS-2286A (LCM+CTP)</div>
+            <!-- 宝石名片 -->
+            <div class="real-gem-card" id="gemCard"></div>
+
+            <!-- 触控菜单按钮 -->
+            <div class="touch-menu">
+                <button class="action-btn" onclick="window.open('ZZW550HIS-2286A.pdf', '_blank')">
+                    <span>📄 模组 Datasheet</span>
+                    <span>➔</span>
+                </button>
+                <button class="action-btn" onclick="alert('联系电话：+86 18124585116 (Susan Xiao)')">
+                    <span>📞 呼叫 Susan Xiao</span>
+                    <span>➔</span>
+                </button>
+            </div>
+
+            <!-- 页脚 -->
+            <div class="screen-footer">MODEL: ZZW550HIS-2286A</div>
+        </div>
     </div>
 
     <script>
-        const screen = document.getElementById('screen');
+        const screen = document.getElementById('activeScreen');
         const gemCard = document.getElementById('gemCard');
 
-        // Touch Ripple Effect Simulator
+        // 点击屏幕水波纹触控特效
         screen.addEventListener('click', function(e) {
             const rect = screen.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
             const circle = document.createElement('div');
-            circle.classList.add('touch-ripple');
-            circle.style.left = `${x - 20}px`;
-            circle.style.top = `${y - 20}px`;
-            circle.style.width = '40px';
-            circle.style.height = '40px';
+            circle.classList.add('ripple');
+            circle.style.left = `${x - 15}px`;
+            circle.style.top = `${y - 15}px`;
+            circle.style.width = '30px';
+            circle.style.height = '30px';
 
             screen.appendChild(circle);
-
-            setTimeout(() => {
-                circle.remove();
-            }, 600);
+            setTimeout(() => { circle.remove(); }, 500);
         });
 
-        // Gem Tilt effect on move
+        // 3D 动态倾斜与光影交互
         screen.addEventListener('mousemove', function(e) {
             const rect = screen.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            
-            gemCard.style.transform = `rotateY(${x / 12}deg) rotateX(${-y / 12}deg)`;
+
+            const tiltX = -y / 8;
+            const tiltY = x / 8;
+
+            gemCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.03)`;
         });
 
         screen.addEventListener('mouseleave', function() {
-            gemCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            gemCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
         });
     </script>
 </body>
