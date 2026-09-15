@@ -26,7 +26,7 @@
         .page-title h1 { font-size: 1.6rem; color: #10b981; }
         .page-title p { font-size: 0.95rem; color: #9ca3af; margin-top: 6px; }
 
-        /* 外层容器：再次放大一倍（最大 1200px） */
+        /* 外层容器（放大显示） */
         .hardware-wrapper {
             position: relative;
             width: 100%;
@@ -43,7 +43,7 @@
             border-radius: 8px;
         }
 
-        /* 屏幕点亮区域：精确覆盖实物图中的黑色显示屏 */
+        /* 屏幕点亮区域 */
         .active-screen {
             position: absolute;
             top: 15.5%;
@@ -62,14 +62,15 @@
             cursor: pointer;
         }
 
-        /* 顶部状态栏 */
+        /* 顶部状态栏（已修改为 ZONEWAY TECHNOLOGY CTP） */
         .screen-header {
             width: 100%;
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: #10b981;
             font-family: monospace;
+            font-weight: 600;
             border-bottom: 1px solid rgba(16, 185, 129, 0.3);
             padding-bottom: 6px;
         }
@@ -155,7 +156,7 @@
         .modal-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.88);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -175,19 +176,21 @@
         }
 
         .modal-title {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #a7f3d0;
             margin-bottom: 8px;
             font-weight: bold;
         }
 
+        /* 邮箱地址样式 */
         .email-box {
             background: #022c22;
             border: 1px dashed #34d399;
-            color: #34d399;
-            padding: 6px;
+            color: #6ee7b7;
+            padding: 8px;
             border-radius: 4px;
-            font-size: 0.7rem;
+            font-size: 0.85rem;
+            font-weight: bold;
             font-family: monospace;
             word-break: break-all;
             margin-bottom: 10px;
@@ -199,7 +202,7 @@
             border: none;
             padding: 6px 12px;
             border-radius: 4px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: bold;
             cursor: pointer;
             margin-bottom: 6px;
@@ -228,10 +231,14 @@
             to { transform: scale(3.5); opacity: 0; }
         }
 
+        /* 底部型号文本（大幅提高字号与醒目程度） */
         .screen-footer {
-            font-size: 0.6rem;
-            color: #6b7280;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #34d399;
+            letter-spacing: 0.5px;
             font-family: monospace;
+            text-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
         }
     </style>
 </head>
@@ -242,7 +249,7 @@
         <p>支持在线查看规格书及一键获取 RFQ 询价邮箱</p>
     </div>
 
-    <!-- 硬件实物外壳（大幅放大） -->
+    <!-- 硬件实物外壳 -->
     <div class="hardware-wrapper">
         <img src="screen-frame.jpg" alt="5.5 Touchscreen Frame" class="hardware-img">
 
@@ -251,7 +258,7 @@
             
             <!-- 状态栏 -->
             <div class="screen-header">
-                <span>ZONEWAY CTP</span>
+                <span>ZONEWAY TECHNOLOGY CTP</span>
                 <span>720×1440</span>
             </div>
 
@@ -274,13 +281,14 @@
                 </button>
             </div>
 
+            <!-- 底部醒目标号 -->
             <div class="screen-footer">MODEL: ZZW550HIS-2286A</div>
 
             <!-- RFQ 邮箱展示弹窗 -->
             <div class="modal-overlay" id="rfqModal">
                 <div class="modal-content">
                     <div class="modal-title">RFQ 官方询价邮箱</div>
-                    <div class="email-box" id="emailText">info@zoneway.com.cn</div>
+                    <div class="email-box" id="emailText">sales@zoneway.com</div>
                     <button class="copy-btn" onclick="copyEmail()">📋 一键复制邮箱</button>
                     <div><button class="close-btn" onclick="closeRfqModal(event)">关闭窗口</button></div>
                 </div>
