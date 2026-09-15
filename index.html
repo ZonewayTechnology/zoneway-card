@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoneway Touch LCM + Dynamic Digital Card Integration</title>
+    <style>
+        :root {
+            --bezel-color: #121316;
+            --screen-bg: #050807;
+            --primary-green: #10b981;
+            --gold-text: #fef3c7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1e2025;
+            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+
+        /* Hardware LCM Shell Simulator */
+        .hardware-frame {
+            position: relative;
+            background: linear-gradient(145deg, #2a2d34, #1a1b20);
+            border: 3px solid #374151;
+            border-radius: 16px;
+            padding: 30px 20px 40px 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Screen Glass Area (Simulating 5.5" 720x1440 Ratio) */
+        .screen-bezel {
+            position: relative;
+            width: 320px;
+            height: 640px;
+            background: #000;
+            border-radius: 8px;
+            border: 2px solid #222;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            background-color: var(--screen-bg);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 15px 30px 15px;
+        }
+
+        /* Glass Reflection Effect (CTP Optical Bonding Sim) */
+        .glass-glare {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(125deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 30%, transparent 50%);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Embedded Emerald Gem */
+        .emerald-gem {
+            position: relative;
+            width: 270px;
+            height: 170px;
+            border-radius: 90px / 65px;
+            background: radial-gradient(ellipse at 50% 50%, #0d5c3a 0%, #042416 70%, #01120a 100%);
+            border: 2px solid rgba(110, 231, 183, 0.5);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), inset 0 0 25px rgba(16, 185, 129, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .emerald-gem:active {
+            transform: scale(0.96);
+        }
+
+        .company-title {
+            font-size: 0.82rem;
+            font-weight: bold;
+            color: var(--gold-text);
+            margin-bottom: 8px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .card-details {
+            font-size: 0.7rem;
+            color: var(--gold-text);
+            line-height: 1.4;
+            font-family: 'Times New Roman', serif;
+        }
+
+        /* Interactive Touch Trigger Points */
+        .touch-dashboard {
+            width: 100%;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dash-btn {
+            background: rgba(6, 78, 59, 0.6);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            color: #a7f3d0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dash-btn:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #ffffff;
+        }
+
+        /* Particle Overlay */
+        .touch-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(110, 231, 183, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Spec Labels on Hardware Shell */
+        .hardware-label {
+            position: absolute;
+            bottom: 12px;
+            font-size: 0.75rem;
+            color: #6b7280;
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>显示屏模组 (LCM) × 动态电子名片 演示</h1>
+        <p>在 5.5 英寸 ZZW550HIS 触摸屏上直接交互与展示</p>
+    </div>
+
+    <!-- Hardware Simulator Frame -->
+    <div class="hardware-frame">
+        <div class="screen-bezel" id="screen">
+            <div class="glass-glare"></div>
+            
+            <div class="screen-content">
+                <!-- Status Bar -->
+                <div style="width:100%; display:flex; justify-content:space-between; font-size:0.65rem; color:#10b981;">
+                    <span>ZONEWAY DISPLAY</span>
+                    <span>MIPI | 720×1440</span>
+                </div>
+
+                <!-- Dynamic Gem Card -->
+                <div class="emerald-gem" id="gemCard">
+                    <div class="company-title">Shenzhen Zoneway Technology Co., Ltd</div>
+                    <div class="card-details">
+                        <div><strong>Susan Xiao</strong> (Sales Manager)</div>
+                        <div style="margin-top: 4px;">sales@zoneway.com</div>
+                        <div>www.zoneway.com</div>
+                    </div>
+                </div>
+
+                <!-- Touch Action Menu (Simulating Product Showcases) -->
+                <div class="touch-dashboard">
+                    <div style="font-size: 0.7rem; color: #34d399; font-weight: bold; text-align: center; margin-bottom: 2px;">
+                        👇 点击屏幕按钮体验触控响应
+                    </div>
+                    <button class="dash-btn" onclick="alert('正在加载 Zoneway 5.5 英寸模组规格书 (PDF)...')">
+                        <span>📄 查看模组 Datasheet</span>
+                        <span>➔</span>
+                    </button>
+                    <button class="dash-btn" onclick="alert('拨打联系电话: +86 18124585116')">
+                        <span>📞 一键呼叫销售经理</span>
+                        <span>➔</span>
+                    </button>
+                    <button class="dash-btn" onclick="alert('发送询价至: sales@zoneway.com')">
+                        <span>✉️ 发送产品询价 (RFQ)</span>
+                        <span>➔</span>
+                    </button>
+                </div>
+
+                <!-- Footer info -->
+                <div style="font-size: 0.6rem; color: #4b5563;">Powered by Zoneway CTP Touch Solution</div>
+            </div>
+        </div>
+
+        <div class="hardware-label">MODEL: ZZW550HIS-2286A (LCM+CTP)</div>
+    </div>
+
+    <script>
+        const screen = document.getElementById('screen');
+        const gemCard = document.getElementById('gemCard');
+
+        // Touch Ripple Effect Simulator
+        screen.addEventListener('click', function(e) {
+            const rect = screen.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const circle = document.createElement('div');
+            circle.classList.add('touch-ripple');
+            circle.style.left = `${x - 20}px`;
+            circle.style.top = `${y - 20}px`;
+            circle.style.width = '40px';
+            circle.style.height = '40px';
+
+            screen.appendChild(circle);
+
+            setTimeout(() => {
+                circle.remove();
+            }, 600);
+        });
+
+        // Gem Tilt effect on move
+        screen.addEventListener('mousemove', function(e) {
+            const rect = screen.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            gemCard.style.transform = `rotateY(${x / 12}deg) rotateX(${-y / 12}deg)`;
+        });
+
+        screen.addEventListener('mouseleave', function() {
+            gemCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+    </script>
+</body>
+</html>
