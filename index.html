@@ -75,18 +75,19 @@
             padding-bottom: 6px;
         }
 
-        /* 宝石名片区域 */
+       /* 宝石名片区域 */
         .real-gem-card {
             position: relative;
             width: 100%;
-            height: 42%;
-            background-image: url('gem.png');
+            height: 48%; /* 适当调大宝石占比 */
+            background-image: url('gem.png'); /* 直接使用原图，代码会自动过滤黑底 */
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            mix-blend-mode: screen; /* 核心：自动把黑色背景过滤为透明 */
             transition: transform 0.15s ease-out;
             transform-style: preserve-3d;
-            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.8));
         }
 
         /* 宝石流光光效 */
