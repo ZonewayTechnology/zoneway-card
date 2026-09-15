@@ -21,16 +21,16 @@
 
         .page-title {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-        .page-title h1 { font-size: 1.4rem; color: #10b981; }
-        .page-title p { font-size: 0.85rem; color: #9ca3af; margin-top: 4px; }
+        .page-title h1 { font-size: 1.6rem; color: #10b981; }
+        .page-title p { font-size: 0.95rem; color: #9ca3af; margin-top: 6px; }
 
-        /* 外层容器：调大显示尺寸 */
+        /* 外层容器：再次放大一倍（最大 1200px） */
         .hardware-wrapper {
             position: relative;
             width: 100%;
-            max-width: 800px; /* 从 500px 大幅放大到 800px */
+            max-width: 1200px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -51,14 +51,14 @@
             width: 27.4%;
             height: 68.8%;
             background-color: #020617;
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 8px;
-            box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.4);
+            padding: 16px 12px;
+            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.4);
             cursor: pointer;
         }
 
@@ -67,11 +67,11 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
-            font-size: 0.6rem;
+            font-size: 0.75rem;
             color: #10b981;
             font-family: monospace;
             border-bottom: 1px solid rgba(16, 185, 129, 0.3);
-            padding-bottom: 4px;
+            padding-bottom: 6px;
         }
 
         /* 宝石名片区域 */
@@ -85,7 +85,7 @@
             background-position: center;
             transition: transform 0.15s ease-out;
             transform-style: preserve-3d;
-            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
         }
 
         /* 宝石流光光效 */
@@ -117,7 +117,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             z-index: 5;
         }
 
@@ -125,9 +125,9 @@
             background: rgba(6, 78, 59, 0.85);
             border: 1px solid rgba(52, 211, 153, 0.6);
             color: #ecfdf5;
-            padding: 6px 8px;
-            border-radius: 4px;
-            font-size: 0.65rem;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -137,18 +137,81 @@
             text-decoration: none;
         }
 
-        /* 突出显示 RFQ 按钮 */
+        /* 高亮 RFQ 按钮 */
         .action-btn.rfq-btn {
             background: linear-gradient(135deg, #059669, #10b981);
             border-color: #a7f3d0;
             color: #ffffff;
             font-weight: bold;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
         }
 
         .action-btn:hover {
             filter: brightness(1.2);
             transform: translateY(-1px);
+        }
+
+        /* RFQ 弹窗遮罩 */
+        .modal-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            z-index: 20;
+            text-align: center;
+        }
+
+        .modal-content {
+            background: #064e3b;
+            border: 1px solid #34d399;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+
+        .modal-title {
+            font-size: 0.75rem;
+            color: #a7f3d0;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .email-box {
+            background: #022c22;
+            border: 1px dashed #34d399;
+            color: #34d399;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            word-break: break-all;
+            margin-bottom: 10px;
+        }
+
+        .copy-btn {
+            background: #10b981;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 6px;
+        }
+
+        .close-btn {
+            background: transparent;
+            color: #9ca3af;
+            border: none;
+            font-size: 0.65rem;
+            cursor: pointer;
+            text-decoration: underline;
         }
 
         /* 水波纹触控特效 */
@@ -166,7 +229,7 @@
         }
 
         .screen-footer {
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             color: #6b7280;
             font-family: monospace;
         }
@@ -176,10 +239,10 @@
 
     <div class="page-title">
         <h1>Zoneway 5.5" CTP 硬件模组 $\times$ 翡翠动态名片</h1>
-        <p>支持在线查看规格书及直接提交询价 (RFQ)</p>
+        <p>支持在线查看规格书及一键获取 RFQ 询价邮箱</p>
     </div>
 
-    <!-- 硬件实物外壳（放大比例） -->
+    <!-- 硬件实物外壳（大幅放大） -->
     <div class="hardware-wrapper">
         <img src="screen-frame.jpg" alt="5.5 Touchscreen Frame" class="hardware-img">
 
@@ -197,7 +260,7 @@
 
             <!-- 触控菜单包含 RFQ 按键 -->
             <div class="touch-menu">
-                <button class="action-btn rfq-btn" onclick="window.open('mailto:info@zoneway.com.cn?subject=RFQ%20for%205.5%20inch%20Touch%20Display%20Module&body=Hi%20Zoneway%20Team,%0A%0AWe%20are%20interested%20in%20your%205.5-inch%20display%20touch%20module.%20Please%20provide%20a%20quotation.%0A%0AThanks!', '_blank')">
+                <button class="action-btn rfq-btn" onclick="openRfqModal(event)">
                     <span>📩 发送 RFQ 询价</span>
                     <span>➔</span>
                 </button>
@@ -212,12 +275,46 @@
             </div>
 
             <div class="screen-footer">MODEL: ZZW550HIS-2286A</div>
+
+            <!-- RFQ 邮箱展示弹窗 -->
+            <div class="modal-overlay" id="rfqModal">
+                <div class="modal-content">
+                    <div class="modal-title">RFQ 官方询价邮箱</div>
+                    <div class="email-box" id="emailText">info@zoneway.com.cn</div>
+                    <button class="copy-btn" onclick="copyEmail()">📋 一键复制邮箱</button>
+                    <div><button class="close-btn" onclick="closeRfqModal(event)">关闭窗口</button></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
         const screen = document.getElementById('activeScreen');
         const gemCard = document.getElementById('gemCard');
+        const rfqModal = document.getElementById('rfqModal');
+
+        // 打开 RFQ 弹窗
+        function openRfqModal(e) {
+            e.stopPropagation();
+            rfqModal.style.display = 'flex';
+        }
+
+        // 关闭 RFQ 弹窗
+        function closeRfqModal(e) {
+            e.stopPropagation();
+            rfqModal.style.display = 'none';
+        }
+
+        // 一键复制邮箱
+        function copyEmail() {
+            const email = document.getElementById('emailText').innerText;
+            navigator.clipboard.writeText(email).then(() => {
+                alert('邮箱地址已成功复制到剪贴板！\n' + email);
+            }).catch(() => {
+                alert('复制失败，请手动复制：' + email);
+            });
+        }
 
         // 水波纹触控反馈
         screen.addEventListener('click', function(e) {
