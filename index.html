@@ -26,7 +26,7 @@
         .page-title h1 { font-size: 1.6rem; color: #10b981; }
         .page-title p { font-size: 0.95rem; color: #9ca3af; margin-top: 6px; }
 
-        /* 外层容器（放大显示） */
+        /* 外层容器 */
         .hardware-wrapper {
             position: relative;
             width: 100%;
@@ -50,15 +50,15 @@
             left: 36.3%;
             width: 27.4%;
             height: 68.8%;
-            background-color: #020617;
+            background-color: #000000;
             border-radius: 6px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 12px;
-            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.4);
+            padding: 12px 10px;
+            box-shadow: inset 0 0 25px rgba(16, 185, 129, 0.5);
             cursor: pointer;
         }
 
@@ -72,22 +72,24 @@
             font-family: monospace;
             font-weight: 600;
             border-bottom: 1px solid rgba(16, 185, 129, 0.3);
-            padding-bottom: 6px;
+            padding-bottom: 4px;
+            z-index: 10;
         }
 
-       /* 宝石名片区域 */
+        /* 宝石悬浮与放大区域 */
         .real-gem-card {
             position: relative;
-            width: 100%;
-            height: 48%; /* 适当调大宝石占比 */
-            background-image: url('gem.png'); /* 直接使用原图，代码会自动过滤黑底 */
-            background-size: contain;
+            width: 130%; /* 超出容器边界以放宽宝石，配合 130% 铺满 */
+            height: 52%;
+            background-image: url('gem.png');
+            background-size: cover; /* 改为 cover 自动裁剪掉上下多余黑色黑边 */
             background-repeat: no-repeat;
             background-position: center;
-            mix-blend-mode: screen; /* 核心：自动把黑色背景过滤为透明 */
-            transition: transform 0.15s ease-out;
+            mix-blend-mode: screen; /* 滤掉原图的黑色 */
+            transition: transform 0.2s ease-out;
             transform-style: preserve-3d;
-            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.8));
+            filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.9));
+            z-index: 2;
         }
 
         /* 宝石流光光效 */
@@ -99,11 +101,11 @@
             background: linear-gradient(
                 125deg,
                 transparent 40%,
-                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.25) 50%,
                 transparent 60%
             );
             transform: rotate(30deg);
-            animation: gemShimmer 5s infinite ease-in-out;
+            animation: gemShimmer 4s infinite ease-in-out;
             pointer-events: none;
         }
 
@@ -119,17 +121,17 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            z-index: 5;
+            gap: 6px;
+            z-index: 10;
         }
 
         .action-btn {
             background: rgba(6, 78, 59, 0.85);
             border: 1px solid rgba(52, 211, 153, 0.6);
             color: #ecfdf5;
-            padding: 8px 10px;
+            padding: 7px 10px;
             border-radius: 6px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -226,6 +228,7 @@
             transform: scale(0);
             animation: ripple-anim 0.5s linear;
             pointer-events: none;
+            z-index: 15;
         }
 
         @keyframes ripple-anim {
@@ -234,18 +237,18 @@
 
         /* 底部型号文本 */
         .screen-footer {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 800;
             color: #34d399;
             letter-spacing: 0.5px;
             font-family: monospace;
             text-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <!-- 已更新顶部文字 -->
     <div class="page-title">
         <h1>Zoneway Technology CTP 触摸屏模组</h1>
         <p>支持在线查看规格书及一键获取 RFQ 询价邮箱</p>
@@ -264,7 +267,7 @@
                 <span>720×1440</span>
             </div>
 
-            <!-- 宝石名片 -->
+            <!-- 宝石名片（自动裁剪黑边并放大） -->
             <div class="real-gem-card" id="gemCard"></div>
 
             <!-- 触控菜单包含 RFQ 按键 -->
