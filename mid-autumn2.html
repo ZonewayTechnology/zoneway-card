@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoneway Technology - 中秋祝福动态短片</title>
+    <!-- 【SEO 防护】声明正版归属权 -->
+    <link rel="canonical" href="https://zonewaytechnology.github.io/mid-autumn-video/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #030712;
+            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 20px;
+            overflow: auto;
+            position: relative;
+            cursor: default; /* 移除点击手势提示，明确无交互 */
+        }
+
+        /* 背景星空粒子层 */
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: starFall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes starFall {
+            0% { transform: translateY(-10px) translateX(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(100vh) translateX(15px); opacity: 0; }
+        }
+
+        /* 顶部安全认证栏（淡入） */
+        .official-banner {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(6, 44, 34, 0.85);
+            border: 1px solid #10b981;
+            padding: 8px 15px;
+            font-size: 0.75rem;
+            color: #34d399;
+            text-align: center;
+            font-family: monospace;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
+        }
+        .official-banner a { color: #6ee7b7; text-decoration: underline; font-weight: bold; }
+
+        /* 核心明月全自动点亮区域 */
+        .moon-container {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            z-index: 10;
+            pointer-events: none; /* 彻底屏蔽所有点击交互 */
+        }
+
+        .moon {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: moonAutoActivate 3s ease-in-out 1.5s forwards;
+        }
+
+        @keyframes moonAutoActivate {
+            0% {
+                width: 180px; height: 180px;
+                background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            }
+            100% {
+                width: 220px; height: 220px;
+                background: radial-gradient(circle at 35% 35%, #fffbeb 0%, #fde047 40%, #f59e0b 80%, #b45309 100%);
+                box-shadow: 0 0 80px rgba(251, 191, 36, 0.9), inset 0 0 35px rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        .moon-text {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            text-align: center;
+            z-index: 2;
+            font-weight: bold;
+            line-height: 1.4;
+            animation: textSwitch 3s ease-in-out 1.5s forwards;
+        }
+
+        @keyframes textSwitch {
+            0% { color: #9ca3af; }
+            100% { color: #78350f; font-size: 1.1rem; text-shadow: 0 1px 2px rgba(255,255,255,0.6); }
+        }
+
+        /* 动态电影字幕式祝福语区域 */
+        .greeting-box {
+            text-align: center;
+            margin-bottom: 20px;
+            z-index: 10;
+            min-height: 90px;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 2s forwards;
+        }
+
+        .greeting-box h1 {
+            font-size: 1.5rem;
+            color: #34d399;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+
+        .greeting-box p {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            line-height: 1.6;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 底部信息淡入 */
+        .footer-info {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: center;
+            font-family: monospace;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景星空粒子生成容器 -->
+    <div id="starfield"></div>
+
+    <!-- 官方认证标 -->
+    <div class="official-banner">
+        🌙 Zoneway Technology Cinematic Greetings | <a href="https://www.zoneway.com" target="_blank" rel="noopener noreferrer">www.zoneway.com</a>
+    </div>
+
+    <!-- 核心全自动点亮明月 -->
+    <div class="moon-container">
+        <div class="moon" id="moon">
+            <div class="moon-text" id="moonText">中秋快乐<br>阖家幸福</div>
+        </div>
+    </div>
+
+    <!-- 电影级自动轮播的祝福语 -->
+    <div class="greeting-box">
+        <h1 id="titleText">🌟 中正威科技祝您中秋阖家团圆！</h1>
+        <p id="descText">感谢一路相伴，愿明月带去我们最真挚的祝福。新的一季，携手共赢，宏图大展！</p>
+    </div>
+
+    <div class="footer-info">
+        Shenzhen Zoneway Technology Co., Ltd. | <a href="https://www.zoneway.com" target="_blank" rel="noopener noreferrer" style="color: #9ca3af;">www.zoneway.com</a>
+    </div>
+
+    <script>
+        // 仅保留纯视觉自动效果，完全移除所有点击事件绑定
+        // 1. 自动生成星空粒子
+        const starfield = document.getElementById('starfield');
+        for (let i = 0; i < 30; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * -50}px`;
+            star.style.animationDuration = `${Math.random() * 4 + 3}s`;
+            star.style.animationDelay = `${Math.random() * 4}s`;
+            starfield.appendChild(star);
+        }
+
+        // 2. 自动轮播祝福文案，全程无任何交互触发逻辑
+        const moonText = document.getElementById('moonText');
+        const titleText = document.getElementById('titleText');
+        const descText = document.getElementById('descText');
+
+        const cinematicScript = [
+            {
+                moon: "中秋快乐<br>阖家幸福",
+                title: "🌟 中正威科技祝您中秋阖家团圆！",
+                desc: "感谢一路相伴，愿明月带去我们最真挚的祝福。新的一季，携手共赢，宏图大展！"
+            },
+            {
+                moon: "生意兴隆<br>万事如意",
+                title: "🚀 智造卓越品质，共创辉煌未来！",
+                desc: "愿我们的 CTP 触摸屏与显示模组产品，能为您的项目带来如明月般璀璨的商业价值！"
+            },
+            {
+                moon: "技术长虹<br>一路同行",
+                title: "🛡️ 匠心守护，值得信赖的工业级伙伴！",
+                desc: "我们将继续以极致的技术与服务为您保驾护航。祝您及您的团队中秋安康、大展宏图！"
+            }
+        ];
+
+        let currentScene = 0;
+
+        // 纯自动定时切换，无任何用户操作触发入口
+        setInterval(() => {
+            currentScene = (currentScene + 1) % cinematicScript.length;
+            const scene = cinematicScript[currentScene];
+
+            // 优雅的淡入淡出切换
+            descText.style.opacity = '0';
+            setTimeout(() => {
+                moonText.innerHTML = scene.moon;
+                titleText.textContent = scene.title;
+                descText.textContent = scene.desc;
+                descText.style.opacity = '1';
+            }, 500);
+
+        }, 4500);
+    </script>
+</body>
+</html>
