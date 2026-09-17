@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoneway Technology 祝您中秋节快乐</title>
+    <!-- 【SEO 防护】声明正版归属权 -->
+    <link rel="canonical" href="https://zonewaytechnology.github.io/mid-autumn/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #030712;
+            color: #e5e7eb;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 15px;
+            overflow-x: hidden;
+            overflow-y: auto; /* 保证小屏手机可以滚动，不会被截断 */
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* 背景星空粒子层 */
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: starFall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes starFall {
+            0% { transform: translateY(-10px) translateX(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
+        }
+
+        /* 顶部安全认证栏 */
+        .official-banner {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(6, 44, 34, 0.85);
+            border: 1px solid #10b981;
+            padding: 8px 15px;
+            font-size: 0.75rem;
+            color: #34d399;
+            text-align: center;
+            font-family: monospace;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            z-index: 10;
+            margin-bottom: 10px;
+        }
+        .official-banner a { color: #6ee7b7; text-decoration: underline; font-weight: bold; }
+
+        /* 中秋核心互动区 */
+        .moon-container {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            z-index: 10;
+        }
+
+        .moon {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            transition: all 0.8s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 点亮后的明月状态 */
+        .moon.activated {
+            width: 210px;
+            height: 210px;
+            background: radial-gradient(circle at 35% 35%, #fffbeb 0%, #fde047 40%, #f59e0b 80%, #b45309 100%);
+            box-shadow: 0 0 60px rgba(251, 191, 36, 0.8), inset 0 0 30px rgba(255, 255, 255, 0.6);
+            animation: moonPulse 3s infinite ease-in-out;
+        }
+
+        @keyframes moonPulse {
+            0%, 100% { box-shadow: 0 0 50px rgba(251, 191, 36, 0.7), inset 0 0 30px rgba(255, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 80px rgba(251, 191, 36, 1), inset 0 0 40px rgba(255, 255, 255, 0.8); }
+        }
+
+        .moon-text {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            text-align: center;
+            z-index: 2;
+            transition: color 0.5s;
+            font-weight: bold;
+            padding: 10px;
+            line-height: 1.4;
+        }
+        .moon.activated .moon-text {
+            color: #78350f;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+            font-size: 1rem;
+        }
+
+        /* 祝福语区域 */
+        .greeting-box {
+            text-align: center;
+            margin: 10px 0 20px 0;
+            z-index: 10;
+            min-height: 90px;
+            max-width: 600px;
+        }
+        .greeting-box h1 {
+            font-size: 1.4rem;
+            color: #34d399;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+        .greeting-box p {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* 触控涟漪特效 */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(251, 191, 36, 0.6);
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            pointer-events: none;
+            z-index: 5;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* 底部信息 */
+        .footer-info {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: center;
+            font-family: monospace;
+            z-index: 10;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景星空粒子生成容器 -->
+    <div id="starfield"></div>
+
+    <!-- 官方认证标 -->
+    <div class="official-banner">
+        🌙 Mid-Autumn Greetings from <a href="https://www.zoneway.com" target="_blank" rel="noopener noreferrer">Zoneway Technology</a>
+    </div>
+
+    <!-- 核心互动明月 -->
+    <div class="moon-container" id="moonContainer">
+        <div class="moon" id="moon">
+            <div class="moon-text" id="moonText">轻触屏幕<br>点亮中秋明月</div>
+        </div>
+    </div>
+
+    <!-- 动态祝福语 -->
+    <div class="greeting-box">
+        <h1 id="titleText">花好月圆，共庆中秋</h1>
+        <p id="descText">点击上方明月开启中秋祝福，连续点击可切换多重惊喜寄语！</p>
+    </div>
+
+    <div class="footer-info">
+        Shenzhen Zoneway Technology Co., Ltd. | <a href="https://www.zoneway.com" target="_blank" rel="noopener noreferrer" style="color: #9ca3af;">www.zoneway.com</a>
+    </div>
+
+    <script>
+        // 自动生成背景星空/桂花粒子特效
+        const starfield = document.getElementById('starfield');
+        for (let i = 0; i < 25; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * -50}px`;
+            star.style.animationDuration = `${Math.random() * 5 + 4}s`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            starfield.appendChild(star);
+        }
+
+        // 移动端智能提示文案适配
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        const moonText = document.getElementById('moonText');
+        if (isTouchDevice) {
+            moonText.innerHTML = "点击屏幕<br>点亮中秋明月";
+        }
+
+        const moonContainer = document.getElementById('moonContainer');
+        const moon = document.getElementById('moon');
+        const titleText = document.getElementById('titleText');
+        const descText = document.getElementById('descText');
+        
+        let isActivated = false;
+        let clickCount = 0;
+
+        // 多重祝福文案循环库
+        const blessings = [
+            {
+                moon: "中秋快乐<br>阖家幸福",
+                title: "🌟 中正威科技祝您中秋阖家团圆！",
+                desc: "感谢一路相伴，愿明月带去我们最真挚的祝福。新的一季，携手共赢，宏图大展！"
+            },
+            {
+                moon: "生意兴隆<br>万事如意",
+                title: "🚀 合作共赢，共创辉煌未来！",
+                desc: "愿我们的 CTP 触摸屏与显示模组产品，能为您的项目带来如明月般璀璨的商业价值！"
+            },
+            {
+                moon: "技术长虹<br>卓越品质",
+                title: "🛡️ 匠心品质，值得信赖的伙伴！",
+                desc: "我们将继续以工业级的高标准和极致服务，为您保驾护航。祝您节日快乐、吉祥如意！"
+            }
+        ];
+
+        // 水波纹节流控制（80ms）
+        let lastRippleTime = 0;
+
+        moonContainer.addEventListener('click', function(e) {
+            const now = Date.now();
+            if (now - lastRippleTime < 80) return;
+            lastRippleTime = now;
+
+            // 生成触控水波纹
+            const rect = moonContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const circle = document.createElement('div');
+            circle.classList.add('ripple');
+            circle.style.left = `${x - 20}px`;
+            circle.style.top = `${y - 20}px`;
+            circle.style.width = '40px';
+            circle.style.height = '40px';
+            moonContainer.appendChild(circle);
+            setTimeout(() => { circle.remove(); }, 600);
+
+            // 第一次点击点亮，后续点击循环切换文案
+            if (!isActivated) {
+                isActivated = true;
+                moon.classList.add('activated');
+            }
+
+            // 使用 textContent 保证绝对安全
+            const currentBlessing = blessings[clickCount % blessings.length];
+            moonText.innerHTML = currentBlessing.moon; // 内部含换行标签，安全可控
+            titleText.textContent = currentBlessing.title;
+            descText.textContent = currentBlessing.desc;
+
+            clickCount++;
+        });
+    </script>
+</body>
+</html>
