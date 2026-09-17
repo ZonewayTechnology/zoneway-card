@@ -17,8 +17,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 25px 20px;
-            overflow: auto;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
             cursor: default;
         }
@@ -42,7 +43,7 @@
         /* 顶部安全认证栏与音乐按钮容器 */
         .top-bar {
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -98,23 +99,23 @@
             50% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.9); }
         }
 
-        /* 巨幕容器（放大到 680px） */
-        .moon-orbit-container {
+        /* 主舞台区：中心明月 + 四周高清大图矩阵 */
+        .stage-container {
             position: relative;
-            width: 680px;
-            height: 680px;
+            width: 100%;
+            max-width: 1100px;
+            height: 520px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: auto;
             z-index: 10;
-            pointer-events: none;
         }
 
-        /* 中心大明月（放大到 320px） */
+        /* 中心大明月 */
         .moon {
-            width: 260px;
-            height: 260px;
+            width: 280px;
+            height: 280px;
             background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
             border-radius: 50%;
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
@@ -128,7 +129,7 @@
 
         @keyframes moonAutoActivate {
             0% {
-                width: 260px; height: 260px;
+                width: 280px; height: 280px;
                 background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
             }
@@ -153,69 +154,54 @@
             100% { color: #78350f; font-size: 1.6rem; text-shadow: 0 2px 4px rgba(255,255,255,0.7); }
         }
 
-        /* 环绕旋转轨道层 */
-        .orbit-ring {
+        /* 四周高清产品展示大卡片（绝对清晰，不旋转、带呼吸浮动） */
+        .product-card {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            animation: orbitRotate 26s linear infinite;
-        }
-
-        @keyframes orbitRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 巨无霸产品卡片（240px × 240px） */
-        .orbit-product {
-            position: absolute;
-            width: 240px;
-            height: 240px;
+            width: 220px;
             background: rgba(6, 78, 59, 0.95);
-            border: 3px solid #34d399;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+            border: 2px solid #34d399;
+            border-radius: 14px;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 15px;
-            animation: counterRotate 26s linear infinite;
+            padding: 10px;
+            animation: floatCard 4s ease-in-out infinite;
+            z-index: 10;
         }
 
-        .orbit-product img {
-            width: 160px;
-            height: 160px;
+        .product-card img {
+            width: 200px;
+            height: 135px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 8px;
         }
 
-        .orbit-product span {
-            font-size: 1.1rem;
+        .product-card span {
+            font-size: 0.9rem;
             color: #a7f3d0;
             margin-top: 8px;
             font-family: monospace;
             font-weight: bold;
-            white-space: nowrap;
         }
 
-        @keyframes counterRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* 十字精准定位（轨道半径撑开到 240px，完美容纳 240px 大卡片） */
-        .p1 { top: 0px; left: 220px; }       /* 正上方：touchscreen1 */
-        .p2 { top: 220px; right: 0px; }     /* 正右方：touchscreen2 */
-        .p3 { bottom: 0px; left: 220px; }   /* 正下方：touchscreen3 */
-        .p4 { top: 220px; left: 0px; }      /* 正左方：touchscreen4 */
+        /* 四个角精准布局大图矩阵 */
+        .card-top-left { top: 10px; left: 40px; animation-delay: 0s; }
+        .card-top-right { top: 10px; right: 40px; animation-delay: 1s; }
+        .card-bottom-left { bottom: 10px; left: 40px; animation-delay: 2s; }
+        .card-bottom-right { bottom: 10px; right: 40px; animation-delay: 3s; }
 
         /* 动态电影字幕式祝福语区域 */
         .greeting-box {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 15px 0;
             z-index: 10;
-            min-height: 100px;
+            min-height: 90px;
             max-width: 800px;
             opacity: 0;
             animation: fadeIn 1.5s ease-out 2s forwards;
@@ -224,7 +210,7 @@
         .greeting-box h1 {
             font-size: 1.8rem;
             color: #34d399;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
         }
 
@@ -273,27 +259,30 @@
         </button>
     </div>
 
-    <!-- 核心全自动点亮明月与巨无霸 4 款触摸屏旋转轨道 -->
-    <div class="moon-orbit-container">
-        <div class="orbit-ring">
-            <div class="orbit-product p1">
-                <img src="touchscreen1.jpg" alt="Zoneway Touchscreen 1" loading="eager">
-                <span>Model-1</span>
-            </div>
-            <div class="orbit-product p2">
-                <img src="touchscreen2.jpg" alt="Zoneway Touchscreen 2" loading="eager">
-                <span>Model-2</span>
-            </div>
-            <div class="orbit-product p3">
-                <img src="touchscreen3.jpg" alt="Zoneway Touchscreen 3" loading="eager">
-                <span>Model-3</span>
-            </div>
-            <div class="orbit-product p4">
-                <img src="touchscreen4.jpg" alt="Zoneway Touchscreen 4" loading="eager">
-                <span>Model-4</span>
-            </div>
+    <!-- 主舞台：中间明月 + 四周超大高清产品矩阵 -->
+    <div class="stage-container">
+        <!-- 左上产品 -->
+        <div class="product-card card-top-left">
+            <img src="touchscreen1.jpg" alt="Zoneway Touchscreen 1" loading="eager">
+            <span>Model-1: CTP Module</span>
+        </div>
+        <!-- 右上产品 -->
+        <div class="product-card card-top-right">
+            <img src="touchscreen2.jpg" alt="Zoneway Touchscreen 2" loading="eager">
+            <span>Model-2: Display Panel</span>
+        </div>
+        <!-- 左下产品 -->
+        <div class="product-card card-bottom-left">
+            <img src="touchscreen3.jpg" alt="Zoneway Touchscreen 3" loading="eager">
+            <span>Model-3: Smart CTP</span>
+        </div>
+        <!-- 右下产品 -->
+        <div class="product-card card-bottom-right">
+            <img src="touchscreen4.jpg" alt="Zoneway Touchscreen 4" loading="eager">
+            <span>Model-4: Industrial Screen</span>
         </div>
 
+        <!-- 中心大明月 -->
         <div class="moon" id="moon">
             <div class="moon-text" id="moonText">中秋快乐<br>阖家幸福</div>
         </div>
