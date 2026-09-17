@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoneway Technology CTP 触摸屏模组</title>
+    <title>Zoneway Technology CTP 触摸屏模组 - 官方正版展厅</title>
+    <!-- 【SEO 防护】声明正版归属权，防止搜索引擎将别人复制的页面判定为原创 -->
+    <link rel="canonical" href="https://zonewaytechnology.github.io/zoneway-card/">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,8 +18,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px 10px;
+            justify-content: flex-start;
+            padding: 0 10px 20px 10px;
+        }
+
+        /* 【安全防伪顶栏样式】 */
+        .official-security-banner {
+            width: 100%;
+            background-color: #062c22;
+            border-bottom: 1px solid #10b981;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            color: #34d399;
+            text-align: center;
+            font-family: monospace;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.2);
+            z-index: 100;
+        }
+        .official-security-banner a {
+            color: #6ee7b7;
+            text-decoration: underline;
+            font-weight: bold;
         }
 
         .page-title {
@@ -79,13 +102,13 @@
         /* 宝石悬浮与放大区域 */
         .real-gem-card {
             position: relative;
-            width: 130%; /* 超出容器边界以放宽宝石，配合 130% 铺满 */
+            width: 130%; 
             height: 52%;
             background-image: url('gem.png');
-            background-size: cover; /* 改为 cover 自动裁剪掉上下多余黑色黑边 */
+            background-size: cover; 
             background-repeat: no-repeat;
             background-position: center;
-            mix-blend-mode: screen; /* 滤掉原图的黑色 */
+            mix-blend-mode: screen; 
             transition: transform 0.2s ease-out;
             transform-style: preserve-3d;
             filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.9));
@@ -245,18 +268,50 @@
             text-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
             z-index: 10;
         }
+
+        /* 轻量级自定义 Toast 提示样式 */
+        .custom-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(6, 78, 59, 0.95);
+            border: 1px solid #34d399;
+            color: #ecfdf5;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 <body>
 
-    <div class="page-title">
-        <h1>Zoneway Technology CTP 触摸屏模组</h1>
-        <p>支持在线查看规格书及一键获取 RFQ 询价邮箱</p>
+    <!-- 【安全防伪置顶横幅】所有外链均已严格补充 noopener noreferrer -->
+    <div class="official-security-banner">
+        🛡️ Official Verified Page by <strong>Shenzhen Zoneway Technology Co., Ltd.</strong> | 
+        Official Website: <a href="https://www.zoneway.com" target="_blank" rel="noopener noreferrer">www.zoneway.com</a> | 
+        <a href="https://github.com/ZonewayTechnology/ZonewayTechnology.github.io" target="_blank" rel="noopener noreferrer">Verified GitHub Repo</a>
     </div>
 
-    <!-- 硬件实物外壳 -->
+    <div class="page-title">
+        <h1>Zoneway Technology CTP 触摸屏模组</h1>
+        <!-- 隐藏的结构化 h2，兼顾无障碍与 SEO 核心大纲 -->
+        <h2 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">ZZW550HIS-2286A Product Specification & RFQ Hub</h2>
+        <p>支持在线查看规格书及一键获取 RFQ 询价邮箱 (Official: <a href="https://www.zoneway.com" target="_blank" rel="noopener noreferrer" style="color: #34d399;">www.zoneway.com</a>)</p>
+    </div>
+
+    <!-- 硬件实物外壳（加入 loading="eager" 强制首屏核心图片优先加载，提升 LCP 性能） -->
     <div class="hardware-wrapper">
-        <img src="screen-frame.jpg" alt="5.5 Touchscreen Frame" class="hardware-img">
+        <img src="screen-frame.jpg" alt="5.5 Touchscreen Frame" class="hardware-img" width="1200" height="800" loading="eager">
 
         <!-- 实物黑屏内部的交互点亮区域 -->
         <div class="active-screen" id="activeScreen">
@@ -267,20 +322,20 @@
                 <span>720×1440</span>
             </div>
 
-            <!-- 宝石名片（自动裁剪黑边并放大） -->
-            <div class="real-gem-card" id="gemCard"></div>
+            <!-- 宝石名片（装饰性背景图 alt 设为空） -->
+            <div class="real-gem-card" id="gemCard" role="img" aria-label=""></div>
 
-            <!-- 触控菜单包含 RFQ 按键 -->
+            <!-- 触控菜单包含 RFQ 按键 (显式声明 type="button") -->
             <div class="touch-menu">
-                <button class="action-btn rfq-btn" onclick="openRfqModal(event)">
+                <button type="button" class="action-btn rfq-btn" onclick="openRfqModal(event)">
                     <span>📩 发送 RFQ 询价</span>
                     <span>➔</span>
                 </button>
-                <button class="action-btn" onclick="window.open('ZZW550HIS-2286A.pdf', '_blank')">
+                <button type="button" class="action-btn" onclick="window.open('ZZW550HIS-2286A.pdf', '_blank', 'noopener noreferrer')">
                     <span>📄 查看 Datasheet</span>
                     <span>➔</span>
                 </button>
-                <button class="action-btn" onclick="alert('联系电话：+86 18124585116 (Susan Xiao)')">
+                <button type="button" class="action-btn" onclick="showToast('联系电话：+86 18124585116 (Susan Xiao) \n官网：www.zoneway.com')">
                     <span>📞 呼叫 Susan Xiao</span>
                     <span>➔</span>
                 </button>
@@ -289,23 +344,27 @@
             <!-- 底部醒目标号 -->
             <div class="screen-footer">MODEL: ZZW550HIS-2286A</div>
 
-            <!-- RFQ 邮箱展示弹窗 -->
-            <div class="modal-overlay" id="rfqModal">
-                <div class="modal-content">
+            <!-- RFQ 邮箱展示弹窗 (点击背景遮罩可自动关闭) -->
+            <div class="modal-overlay" id="rfqModal" onclick="closeRfqModal(event)">
+                <div class="modal-content" onclick="event.stopPropagation()">
                     <div class="modal-title">RFQ 官方询价邮箱</div>
                     <div class="email-box" id="emailText">sales@zoneway.com</div>
-                    <button class="copy-btn" onclick="copyEmail()">📋 一键复制邮箱</button>
-                    <div><button class="close-btn" onclick="closeRfqModal(event)">关闭窗口</button></div>
+                    <button type="button" class="copy-btn" onclick="copyEmail()">📋 一键复制邮箱</button>
+                    <div><button type="button" class="close-btn" onclick="closeRfqModalDirect(event)">关闭窗口</button></div>
                 </div>
             </div>
 
         </div>
     </div>
 
+    <!-- 轻量 Toast 提示容器 -->
+    <div id="customToast" class="custom-toast">提示信息</div>
+
     <script>
         const screen = document.getElementById('activeScreen');
         const gemCard = document.getElementById('gemCard');
         const rfqModal = document.getElementById('rfqModal');
+        let isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
         // 打开 RFQ 弹窗
         function openRfqModal(e) {
@@ -313,24 +372,71 @@
             rfqModal.style.display = 'flex';
         }
 
-        // 关闭 RFQ 弹窗
+        // 关闭 RFQ 弹窗（支持点击遮罩）
         function closeRfqModal(e) {
+            rfqModal.style.display = 'none';
+        }
+
+        function closeRfqModalDirect(e) {
             e.stopPropagation();
             rfqModal.style.display = 'none';
         }
 
-        // 一键复制邮箱
-        function copyEmail() {
-            const email = document.getElementById('emailText').innerText;
-            navigator.clipboard.writeText(email).then(() => {
-                alert('邮箱地址已成功复制到剪贴板！\n' + email);
-            }).catch(() => {
-                alert('复制失败，请手动复制：' + email);
-            });
+        // 轻量 Toast 提示代替原生 alert
+        function showToast(message) {
+            const toast = document.getElementById('customToast');
+            toast.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
 
-        // 水波纹触控反馈
+        // 一键复制邮箱（已集成兼容旧浏览器的降级兜底方案）
+        function copyEmail() {
+            const email = document.getElementById('emailText').innerText;
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(email).then(() => {
+                    showToast('邮箱已复制！官网: www.zoneway.com\n' + email);
+                    rfqModal.style.display = 'none';
+                }).catch(() => {
+                    fallbackCopyText(email);
+                });
+            } else {
+                fallbackCopyText(email);
+            }
+        }
+
+        // 剪贴板降级方案（针对老旧浏览器）
+        function fallbackCopyText(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";  
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast('邮箱已复制！官网: www.zoneway.com\n' + text);
+                    rfqModal.style.display = 'none';
+                } else {
+                    showToast('复制失败，请手动选中复制：' + text);
+                }
+            } catch (err) {
+                showToast('复制失败，请手动选中复制：' + text);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // 水波纹触控特效（加入防抖与节流控制）
+        let lastRippleTime = 0;
         screen.addEventListener('click', function(e) {
+            const now = Date.now();
+            if (now - lastRippleTime < 80) return; 
+            lastRippleTime = now;
+
             const rect = screen.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -346,21 +452,23 @@
             setTimeout(() => { circle.remove(); }, 500);
         });
 
-        // 3D 倾斜光彩跟随
-        screen.addEventListener('mousemove', function(e) {
-            const rect = screen.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+        // 3D 倾斜光彩跟随（移动端触屏设备自动屏蔽）
+        if (!isTouchDevice) {
+            screen.addEventListener('mousemove', function(e) {
+                const rect = screen.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
 
-            const tiltX = -y / 6;
-            const tiltY = x / 6;
+                const tiltX = -y / 6;
+                const tiltY = x / 6;
 
-            gemCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
-        });
+                gemCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
+            });
 
-        screen.addEventListener('mouseleave', function() {
-            gemCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-        });
+            screen.addEventListener('mouseleave', function() {
+                gemCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            });
+        }
     </script>
 </body>
 </html>
