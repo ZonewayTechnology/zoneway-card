@@ -98,11 +98,11 @@
             50% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.8); }
         }
 
-        /* 核心明月与 4 款产品旋转轨道容器 */
+        /* 核心明月与 4 款产品旋转轨道容器（适当扩大整体容器范围） */
         .moon-orbit-container {
             position: relative;
-            width: 320px;
-            height: 320px;
+            width: 380px;
+            height: 380px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -111,10 +111,10 @@
             pointer-events: none;
         }
 
-        /* 中心明月 */
+        /* 中心明月（稍微加大尺寸以匹配放大的外围） */
         .moon {
-            width: 140px;
-            height: 140px;
+            width: 150px;
+            height: 150px;
             background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
             border-radius: 50%;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
@@ -128,19 +128,19 @@
 
         @keyframes moonAutoActivate {
             0% {
-                width: 140px; height: 140px;
+                width: 150px; height: 150px;
                 background: radial-gradient(circle at 30% 30%, #4b5563, #1f2937 70%);
                 box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
             }
             100% {
-                width: 160px; height: 160px;
+                width: 175px; height: 175px;
                 background: radial-gradient(circle at 35% 35%, #fffbeb 0%, #fde047 40%, #f59e0b 80%, #b45309 100%);
-                box-shadow: 0 0 60px rgba(251, 191, 36, 0.9), inset 0 0 35px rgba(255, 255, 255, 0.7);
+                box-shadow: 0 0 70px rgba(251, 191, 36, 0.9), inset 0 0 35px rgba(255, 255, 255, 0.7);
             }
         }
 
         .moon-text {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #9ca3af;
             text-align: center;
             font-weight: bold;
@@ -150,7 +150,7 @@
 
         @keyframes textSwitch {
             0% { color: #9ca3af; }
-            100% { color: #78350f; font-size: 0.85rem; text-shadow: 0 1px 2px rgba(255,255,255,0.6); }
+            100% { color: #78350f; font-size: 0.95rem; text-shadow: 0 1px 2px rgba(255,255,255,0.6); }
         }
 
         /* 环绕旋转轨道层 */
@@ -158,7 +158,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            animation: orbitRotate 18s linear infinite;
+            animation: orbitRotate 20s linear infinite;
         }
 
         @keyframes orbitRotate {
@@ -166,35 +166,36 @@
             to { transform: rotate(360deg); }
         }
 
-        /* 环绕的产品卡片样式（4张图） */
+        /* 环绕的产品卡片样式（显著放大尺寸：90px × 90px） */
         .orbit-product {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: rgba(6, 78, 59, 0.9);
-            border: 1px solid #34d399;
-            border-radius: 8px;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+            width: 90px;
+            height: 90px;
+            background: rgba(6, 78, 59, 0.92);
+            border: 2px solid #34d399;
+            border-radius: 12px;
+            box-shadow: 0 0 18px rgba(16, 185, 129, 0.7);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 3px;
-            animation: counterRotate 18s linear infinite;
+            padding: 6px;
+            animation: counterRotate 20s linear infinite;
         }
 
         .orbit-product img {
-            width: 36px;
-            height: 36px;
+            width: 55px;
+            height: 55px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .orbit-product span {
-            font-size: 0.5rem;
+            font-size: 0.65rem;
             color: #a7f3d0;
-            margin-top: 1px;
+            margin-top: 3px;
             font-family: monospace;
+            font-weight: bold;
             white-space: nowrap;
         }
 
@@ -203,11 +204,11 @@
             to { transform: rotate(-360deg); }
         }
 
-        /* 四款产品的十字 90 度精准定位 */
-        .p1 { top: 0px; left: 130px; }       /* 正上方：touchscreen1 */
-        .p2 { top: 130px; right: 0px; }     /* 正右方：touchscreen2 */
-        .p3 { bottom: 0px; left: 130px; }   /* 正下方：touchscreen3 */
-        .p4 { top: 130px; left: 0px; }      /* 正左方：touchscreen4 */
+        /* 四款产品的十字十字精准定位（外扩轨道半径至 145px） */
+        .p1 { top: 0px; left: 145px; }       /* 正上方：touchscreen1 */
+        .p2 { top: 145px; right: 0px; }     /* 正右方：touchscreen2 */
+        .p3 { bottom: 0px; left: 145px; }   /* 正下方：touchscreen3 */
+        .p4 { top: 145px; left: 0px; }      /* 正左方：touchscreen4 */
 
         /* 动态电影字幕式祝福语区域 */
         .greeting-box {
@@ -272,7 +273,7 @@
         </button>
     </div>
 
-    <!-- 核心全自动点亮明月与 4 款触摸屏旋转轨道 -->
+    <!-- 核心全自动点亮明月与放大版的 4 款触摸屏旋转轨道 -->
     <div class="moon-orbit-container">
         <div class="orbit-ring">
             <div class="orbit-product p1">
